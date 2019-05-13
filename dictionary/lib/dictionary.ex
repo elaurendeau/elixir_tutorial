@@ -8,21 +8,12 @@ defmodule Dictionary do
     |> File.read!()
     |> String.split(~r/\n/)
   end
-  def test do
-    "test"
-    |> String.upcase(:default)
-    |> IO.puts()
-  end
-
-  defp test_private do
-    IO.puts("hello world")
-  end
 
   def random_word do
     word_list()
     |> Enum.random()
   end
-  
+ 
 
   def compare_and_reverse do
     "had we but world enough, and time"
