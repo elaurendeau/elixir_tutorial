@@ -20,6 +20,6 @@ defmodule Patternmatching do
 
 
   def even_length?([]), do: true
-  def even_length?([first, second | tail]), do: true && even_length?(tail)
-  def even_length?([first | tail]), do: false && even_length?(tail)
+  def even_length?([_first, _second | tail]), do: true && even_length?(tail)
+  def even_length?([_first | tail]), do: false && even_length?(tail)
 end

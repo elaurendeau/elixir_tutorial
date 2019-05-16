@@ -1,0 +1,4 @@
+%{
+  "absinthe": {:hex, :absinthe, "1.4.16", "0933e4d9f12652b12115d5709c0293a1bf78a22578032e9ad0dad4efee6b9eb1", [:mix], [{:dataloader, "~> 1.0.0", [hex: :dataloader, repo: "hexpm", optional: true]}, {:decimal, "~> 1.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm"},
+  "inflex": {:hex, :inflex, "1.10.0", "8366a7696e70e1813aca102e61274addf85d99f4a072b2f9c7984054ea1b9d29", [:mix], [], "hexpm"},
+}
