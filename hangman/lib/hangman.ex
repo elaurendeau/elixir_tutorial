@@ -1,10 +1,8 @@
 defmodule Hangman do
-  def hello do
-    Dictionary.random_word()
-    |> IO.puts()
-  end
-  
-  def test do
-  end
+
+  alias Hangman.Game
+
+  defdelegate new_game(), to: Game, as: :init_game
+  defdelegate make_move(game, guess), to: Game
 end
 
