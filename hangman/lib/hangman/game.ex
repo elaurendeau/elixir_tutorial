@@ -28,12 +28,31 @@ defmodule Hangman.Game do
   def accept_move(game, guess, _letter_not_guessed) do
     game
     |> Map.put(:guessed_letters, MapSet.put(game.guessed_letters, guess))
-    |> Map.put(:turns_left, game.turns_left - 1)
+    |> process_guess(Enum.member?(game.letters, guess))
+
   end
 
-  # def accept_move(game, guess, _letter_not_guessed) do
-  #   game |> Map.put(:guessed_letters, MapSet.put(game, value))
+  def process_guess(game, _good_guess = true) do
+    game.letters
+    |> MapSet.new()
+    |> MapSet.subset?(game.guessed_letters)
+    |> win_conditions()
+  end
+
+  def process_guess(game, _bad_guess) do
+    game_with_less_turns = Map.put(game, :turns_left, game.turns_left - 1)
+    Map.put(game_with_less_turns, :game_state, lose_conditions(game_with_less_turns))
+  end
+
+  def win_conditions(_game_won = true), do: :won
+
+  def win_conditions(_game_not_won), do: :good_guess
+
+  # def lose_conditions(game = %{ turns_left = turns }) when turns = 0 do
+  #   :lost
   # end
+
+  def lose_conditions(_), do: :bad_guess
 
   def tally(_game) do
     1234
