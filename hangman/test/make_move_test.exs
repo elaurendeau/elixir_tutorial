@@ -42,17 +42,13 @@ defmodule MakeMoveTest do
   test "bad guess until defeat" do
     game = Hangman.new_game()
 
-    game_with_no_turn_left = Enum.reduce_while(6..1, game, fn attempt_left, game ->
+    game_with_no_turn_left = Enum.reduce(6..1, game, fn attempt_left, game ->
       bad_guess = find_bad_letter(game)
 
-      if bad_guess != nil do
         temporary_game = Hangman.make_move(game, bad_guess)
         assert temporary_game.turns_left == attempt_left
         assert temporary_game.game_state == :bad_guess
-        {:cont, temporary_game}
-      else
-        {:alt, game}
-      end
+        temporary_game
     end)
 
     bad_guess = find_bad_letter(game_with_no_turn_left)
