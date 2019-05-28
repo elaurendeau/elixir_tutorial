@@ -36,12 +36,6 @@ defmodule MakeMoveTest do
       temporaryGame
     end)
 
-    # for guess <- game.letters do
-    #   game = Hangman.make_move(game, guess)
-    #   assert game.turns_left == 7
-    #   assert MapSet.member?(game.guessed_letters, guess) == true
-    # end
-
     assert finalGame.game_state == :won
   end
 
