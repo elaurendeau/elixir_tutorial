@@ -29,14 +29,15 @@ defmodule Hangman.Game do
     game
     |> Map.put(:guessed_letters, MapSet.put(game.guessed_letters, guess))
     |> process_guess(Enum.member?(game.letters, guess))
-
   end
 
   def process_guess(game, _good_guess = true) do
-    game.letters
+    new_state = game.letters
     |> MapSet.new()
     |> MapSet.subset?(game.guessed_letters)
     |> win_conditions()
+
+    Map.put(game, :game_state, new_state)
   end
 
   def process_guess(game, _bad_guess) do
