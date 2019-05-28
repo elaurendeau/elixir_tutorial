@@ -29,14 +29,37 @@ defmodule MakeMoveTest do
   test "good guess until victory" do
     game = Hangman.new_game()
 
-    finalGame = Enum.reduce(game.letters, game, fn guess, game ->
-      temporaryGame = Hangman.make_move(game, guess)
-      assert temporaryGame.turns_left == 7
-      assert MapSet.member?(temporaryGame.guessed_letters, guess) == true
-      temporaryGame
+    final_game = Enum.reduce(game.letters, game, fn guess, game ->
+      temporary_game = Hangman.make_move(game, guess)
+      assert temporary_game.turns_left == 7
+      assert MapSet.member?(temporary_game.guessed_letters, guess) == true
+      temporary_game
     end)
 
-    assert finalGame.game_state == :won
+    assert final_game.game_state == :won
+  end
+
+  test "bad guess until defeat" do
+    game = Hangman.new_game()
+
+    game_with_no_turn_left = Enum.reduce_while(6..1, game, fn attempt_left, game ->
+      bad_guess = find_bad_letter(game)
+
+      if bad_guess != nil do
+        temporary_game = Hangman.make_move(game, bad_guess)
+        assert temporary_game.turns_left == attempt_left
+        assert temporary_game.game_state == :bad_guess
+        {:cont, temporary_game}
+      else
+        {:alt, game}
+      end
+    end)
+
+    bad_guess = find_bad_letter(game_with_no_turn_left)
+    final_game = Hangman.make_move(game_with_no_turn_left, bad_guess)
+
+    assert final_game.turns_left == 0
+    assert final_game.game_state == :lost
   end
 
   test "changed state after guessing the same bad letter twice" do

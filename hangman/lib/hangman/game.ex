@@ -49,9 +49,7 @@ defmodule Hangman.Game do
 
   def win_conditions(_game_not_won), do: :good_guess
 
-  # def lose_conditions(game = %{ turns_left = turns }) when turns = 0 do
-  #   :lost
-  # end
+  def lose_conditions(_game = %{ turns_left: 0 }), do: :lost
 
   def lose_conditions(_), do: :bad_guess
 
