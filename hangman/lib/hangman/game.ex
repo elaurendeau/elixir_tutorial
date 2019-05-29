@@ -40,8 +40,8 @@ defmodule Hangman.Game do
     Map.put(game, :game_state, new_state)
   end
 
-  def process_guess(game, _bad_guess) do
-    game_with_less_turns = Map.put(game, :turns_left, game.turns_left - 1)
+  def process_guess(game = %{ turns_left: turns_left }, _bad_guess) do
+    game_with_less_turns = Map.put(game, :turns_left, turns_left - 1)
     Map.put(game_with_less_turns, :game_state, lose_conditions(game_with_less_turns))
   end
 
